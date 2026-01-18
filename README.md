@@ -40,3 +40,10 @@ chmod 444 .bash_logout .bashrc .profile
 ```
 
 ---
+These commands show how to import and export a MySQL database using the command line. The import command uses the `mysql` client to connect to a specified database as a given user, prompts for the password, and then reads SQL statements from `file.sql`, applying them to `database_name`. The export command uses `mysqldump` to connect to the same database and write its entire structure and data as SQL statements into `file.sql`, creating a backup that can later be restored using the import command.
+Import:
+`mysql -u username -p database_name < file.sql`
+Export:
+`mysqldump -u username -p database_name > file.sql`
+
+---
