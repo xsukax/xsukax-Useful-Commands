@@ -22,3 +22,21 @@ lsof -i tcp -n | grep '\<ssh\>' | awk '{print $3}' | sort | uniq
 ```
 
 ---
+This Bash script interactively creates a restricted user account and locks down its environment. It prompts for a username, then uses `useradd` to create the account with a home directory under `/home`, assigns the restricted shell (`rbash`), and sets a password. After switching to the user’s home directory, it appends `PATH=""` to `.profile` to prevent the user from executing commands outside explicitly allowed paths. Finally, it tightens permissions by making the home directory read-and-execute only and setting key shell configuration files (`.bash_logout`, `.bashrc`, and `.profile`) to read-only, limiting the user’s ability to modify their environment or escape the restricted shell.
+
+```
+#!/bin/bash
+
+echo -n "Enter username: "
+read usernamee;
+
+cd /tmp/
+useradd $usernamee -m -d /home/$usernamee -s /bin/rbash
+passwd $usernamee
+cd /home/$usernamee/
+echo 'PATH=""' >> /home/$usernamee/.profile
+chmod 555 /home/$usernamee/
+chmod 444 .bash_logout .bashrc .profile
+```
+
+---
