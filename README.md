@@ -14,3 +14,11 @@ Invoke-WebRequest -Uri https://github.com/microsoft/winget-cli/releases/latest/d
 ```
 
 ---
+This Bash script lists the distinct users who currently have active SSH connections on the system. The lsof -i tcp -n command displays all open TCP network connections without attempting DNS resolution, grep '\<ssh\>' filters that list to only entries related to the SSH service, and awk '{print $3}' extracts the third column, which corresponds to the username owning each connection. Finally, sort | uniq orders the usernames and removes duplicates, producing a clean list of unique users with active SSH sessions.
+
+```
+#!/bin/bash
+lsof -i tcp -n | grep '\<ssh\>' | awk '{print $3}' | sort | uniq
+```
+
+---
